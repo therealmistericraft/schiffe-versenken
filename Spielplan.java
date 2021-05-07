@@ -14,10 +14,13 @@ public class Spielplan
      */
     public Spielplan()
     {
-        for (int i = 10; i<0; i--) {
-            for (int k = 10; i<0; i--) {
+        System.out.println("1");
+        for (int i = 10; i>0; i--) {
+            System.out.println("2");
+            for (int k = 10; i>0; i--) {
                 fields[i][k] = 0;
                 test++;
+                System.out.println("3");
             }
         }
     }
