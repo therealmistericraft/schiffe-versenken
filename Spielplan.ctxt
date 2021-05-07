@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Spielplan
+comment0.text=\r\n\ 10x10\ Spielplan\ f\u00FCr\ das\ Schiffe-versenken-Spiel\r\n\r\n\ @version\ 0.1\r\n
+comment1.params=
+comment1.target=Spielplan()
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Spielplan\r\n
+numComments=2
