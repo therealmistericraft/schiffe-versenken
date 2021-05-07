@@ -1,33 +1,24 @@
-
 /**
- * Write a description of class Spielplan here.
+ * 10x10 Spielplan für das Schiffe-versenken-Spiel
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @version 0.1
  */
 public class Spielplan
 {
     // instance variables - replace the example below with your own
-    private int x;
+    private int[][] fields;
+    private int test;
 
     /**
      * Constructor for objects of class Spielplan
      */
     public Spielplan()
     {
-        // initialise instance variables
-        x = 0;
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+        for (int i = 10; i<0; i--) {
+            for (int k = 10; i<0; i--) {
+                fields[i][k] = 0;
+                test++;
+            }
+        }
     }
 }
