@@ -19,15 +19,78 @@ public class Spieler
         x = 0;
     }
 
+    
+    
+    // Get- und Setmethoden
+    
+    
+    // get-Methoden
+
+    
     /**
-     * An example of a method - replace this comment with your own
+     * Gibt einen Array mit Feldern, die bereits getroffen wurden, zurück.
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @return    Array mit getroffenen Feldern
      */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+    public int[] getTreffer() {
+        return treffer;
+    }
+    
+    /**
+     * Das Gegnerobjekt herausfinden
+     *
+     * @return    Spielerobjekt des Gegners
+     */
+    public Spieler getGegner() {
+        return gegner;
+    }
+    
+    /**
+     * Das Spielfeldobjekt herausfinden
+     *
+     * @return    Objekt der Klasse Spielfeld
+     */
+    public Spielfeld getSpielfeld() {
+        return spielplan;
+    }
+    
+    
+    // Set-Methoden
+    
+    
+    /**
+     * Festlegen, aus wie vielen Einern die Flotte besteht
+     * 
+     * @param   pEiner   Anzahl der Einer in der Soll-Flotte
+     */
+    public void setVerfuegbareEiner(int pEiner) {
+        this.verfuegbareEiner = pEiner;
+    }
+    
+    /**
+     * Festlegen, aus wie vielen Zweiern die Flotte besteht
+     * 
+     * @param   pEiner   Anzahl der Zweier in der Soll-Flotte
+     */
+    public void setVerfuegbareZweier(int pZweier) {
+        this.verfuegbareZweier = pZweier;
+    }
+    
+    /**
+     * Festlegen, aus wie vielen Dreiern die Flotte besteht
+     * 
+     * @param   pEiner   Anzahl der Dreier in der Soll-Flotte
+     */
+    public void setVerfuegbareDreier(int pDreier) {
+        this.verfuegbareDreier = pDreier;
+    }
+    
+    /**
+     * Gegnerobjekt zuweisen
+     *
+     * @param   pGegner   gegnerisches Spielerobjekt
+     */
+    public void setGegner(Spieler pGegner) {
+        this.gegner = pGegner;
     }
 }
