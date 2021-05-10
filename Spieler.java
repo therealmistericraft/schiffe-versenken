@@ -7,16 +7,23 @@
  */
 public class Spieler
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    // instance variables
+    private int verfuegbareEiner;
+    private int verfuegbareZweier;
+    private int verfuegbareDreier;
+    private int treffer;
+    private Spielplan spielplan1;
+    private Gegner spieler1;
+
 
     /**
      * Constructor for objects of class Spieler
      */
-    public Spieler()
+    public Spieler(Spieler pSpieler1, Spielplan pSpielplan1)
     {
         // initialise instance variables
-        x = 0;
+        this.spieler1 = pSpieler1;
+        this.spielplan1 = pSpielplan1;
     }
 
     
