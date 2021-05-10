@@ -26,13 +26,59 @@ public class Spieler
         this.spielplan1 = pSpielplan1;
     }
 
+    /**
+     * Setze ein Schiff auf ein Feld in eine Richtung
+     *
+     * @param   spalte    Spalte, in die der Anfang des Schiffs gesetzt werden soll, int oder var
+     * @param   reihe   Reihe, in die der Anfang des Schiffs gesetzt werden soll, int
+     * @param   groesse   Art des Schiffes, 1, 2 oder 3
+     * @param   richtung   Richtung, in die ausgehend vom Anfangsfeld das Schiff platziert werden soll, nord, ost, sued, west
+     */
+    public void platzieren(int spalte, int reihe, int groesse, String richtung) {
+           
+    }
     
+    /**
+     * Schiesse auf ein Feld, ueberpfuefe zunaechst ob dort bereits geschossen wurde
+     *
+     * @param   spalte    Spalte, in der das Feld liegt, auf das geschossen werden soll, int oder var
+     * @param   reihe   Reihe, in der das Feld liegt, auf das geschossen werden soll, int
+     */
+    public void schiessen(int spalte, int reihe) {
+        
+    }
     
     // Get- und Setmethoden
     
     
     // get-Methoden
 
+    /**
+     * Die Anzahl der verfuegbaren Einer herausfinden
+     *
+     * @return    Anzahl der verfuegbaren Einer
+     */
+    public int getVerfuegbareEiner() {
+        return einer;
+    }
+    
+     /**
+     * Die Anzahl der verfuegbaren Zweier herausfinden
+     *
+     * @return    Anzahl der verfuegbaren Zweier
+     */
+    public int getVerfuegbareZweier() {
+        return zweier;
+    }
+    
+     /**
+     * Die Anzahl der verfuegbaren Dreier herausfinden
+     *
+     * @return    Anzahl der verfuegbaren Dreier
+     */
+    public int getVerfuegbareDreier() {
+        return dreier;
+    }
     
     /**
      * Gibt einen Array mit Feldern, die bereits getroffen wurden, zurück.
