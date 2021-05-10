@@ -34,6 +34,7 @@ public class Spielplan
         h = 8;
         i = 9;
         j = 10;
+        fields = new int[10][10];
         System.out.println("1");
         for (int i = 10; i>0; i--) {
             System.out.println("2");
@@ -54,7 +55,29 @@ public class Spielplan
      */
     public int auskunftGeben(int spalte, int reihe)
     {
-           
+           return fields[spalte][reihe];
+    }
+    
+    public int[][] benachbarteFelderErmitteln(int spalte, int reihe)
+    {
+        int[][] benachbarteFelder = new int[8][2];
+        benachbarteFelder[0][0] = spalte+1;
+        benachbarteFelder[0][1] = reihe;
+        benachbarteFelder[1][0] = spalte-1;
+        benachbarteFelder[1][1] = reihe;
+        benachbarteFelder[2][0] = spalte;
+        benachbarteFelder[2][1] = reihe+1;
+        benachbarteFelder[3][0] = spalte;
+        benachbarteFelder[3][1] = reihe+1;
+        benachbarteFelder[4][0] = spalte+1;
+        benachbarteFelder[4][1] = reihe+1;
+        benachbarteFelder[5][0] = spalte+1;
+        benachbarteFelder[5][1] = reihe-1;
+        benachbarteFelder[6][0] = spalte-1;
+        benachbarteFelder[6][1] = reihe+1;
+        benachbarteFelder[7][0] = spalte-1;
+        benachbarteFelder[7][1] = reihe-1;
+        return benachbarteFelder;
     }
     
      /**
@@ -76,7 +99,7 @@ public class Spielplan
             if (orientierung == "ost") {
                 zustand = this.auskunftGeben(spalte+i, reihe);
                 if (zustand == 0) {
-                    fields[spalte][reihe+1] = 1;   
+                    fields[spalte][reihe+i] = 1;   
                 }
             }
             if (orientierung == "sued") {
@@ -88,7 +111,7 @@ public class Spielplan
             if (orientierung == "west") {
                 zustand = this.auskunftGeben(spalte-i, reihe);
                 if (zustand == 0) {
-                    fields[spalte-1][reihe] = 1;   
+                    fields[spalte-i][reihe] = 1;   
                 }
             }
         }
@@ -96,6 +119,7 @@ public class Spielplan
     
     /**
      * Prueft, ob ein Spieler gewonnen hat und gibt ggf. das Spielerobjekt zurueck
+     * Moegliche Loesung: Anzahl der Felder, auf denen ein Schiff ist, bestimmen und mit der Anzahl der Felder, bei denen "2" ist, abgleichen
      *
      * @return Objekt des Spielers, der gewonnen hat
      */
