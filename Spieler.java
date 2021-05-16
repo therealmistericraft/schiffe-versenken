@@ -11,19 +11,18 @@ public class Spieler
     private int verfuegbareEiner;
     private int verfuegbareZweier;
     private int verfuegbareDreier;
-    private int treffer;
-    private Spielplan spielplan1;
-    private Gegner spieler1;
+    private int[] treffer;
+    private Spielplan spielplan;
+    private Spieler gegner;
 
 
     /**
      * Constructor for objects of class Spieler
      */
-    public Spieler(Spieler pSpieler1, Spielplan pSpielplan1)
+    public Spieler(Spieler pSpieler1, Spielplan pSpielplan)
     {
         // initialise instance variables
-        this.spieler1 = pSpieler1;
-        this.spielplan1 = pSpielplan1;
+        this.spielplan = pSpielplan;
     }
 
     /**
@@ -59,7 +58,7 @@ public class Spieler
      * @return    Anzahl der verfuegbaren Einer
      */
     public int getVerfuegbareEiner() {
-        return einer;
+        return verfuegbareEiner;
     }
     
      /**
@@ -68,7 +67,7 @@ public class Spieler
      * @return    Anzahl der verfuegbaren Zweier
      */
     public int getVerfuegbareZweier() {
-        return zweier;
+        return verfuegbareZweier;
     }
     
      /**
@@ -77,7 +76,7 @@ public class Spieler
      * @return    Anzahl der verfuegbaren Dreier
      */
     public int getVerfuegbareDreier() {
-        return dreier;
+        return verfuegbareDreier;
     }
     
     /**
@@ -103,7 +102,7 @@ public class Spieler
      *
      * @return    Objekt der Klasse Spielfeld
      */
-    public Spielfeld getSpielfeld() {
+    public Spielplan getSpielfeld() {
         return spielplan;
     }
     
