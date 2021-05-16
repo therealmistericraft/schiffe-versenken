@@ -42,8 +42,8 @@ public class Spielplan
         invalidCount = 0;
         valid = true;
         fields = new int[10][10];
-        for (int i = 9; i == 0; i--) {
-            for (int k = 9; i == 0; i--) {
+        for (int i = 9; i >= 0; i--) {
+            for (int k = 9; i >= 0; i--) {
                 fields[i][k] = 0;
                 test++;
             }
@@ -93,12 +93,14 @@ public class Spielplan
      */
     public void schiffeAufnehmen(int spalte, int reihe, int groesse, String orientierung)
     {
+        spalte--;
+        reihe--;
         //erst pruefen, ob das Schiff so gesetzt werden kann
-        for (int i = 0; i==groesse; i++) {
+        for (int i = 0; i<groesse; i++) {
             if (orientierung == "nord") {
                 zustand = this.auskunftGeben(spalte, reihe-i);
                 if (zustand == 0) {
-                    if (validieren(spalte, reihe, i) != true) {
+                    if (validieren(spalte, reihe-i) != true) {
                         valid = false;
                     }
                 } else {
@@ -108,7 +110,7 @@ public class Spielplan
             if (orientierung == "ost") {
                 zustand = this.auskunftGeben(spalte+i, reihe);
                 if (zustand == 0) {
-                    if (validieren(spalte, reihe, i) != true) {
+                    if (validieren(spalte+i, reihe) != true) {
                         valid = false;
                     }
                 } else {
@@ -118,7 +120,7 @@ public class Spielplan
             if (orientierung == "sued") {
                 zustand = this.auskunftGeben(spalte, reihe+i);
                 if (zustand == 0) {
-                    if (validieren(spalte, reihe, i) != true) {
+                    if (validieren(spalte, reihe+i) != true) {
                         valid = false;
                     }
                 } else {
@@ -128,7 +130,7 @@ public class Spielplan
             if (orientierung == "west") {
                 zustand = this.auskunftGeben(spalte-i, reihe);
                 if (zustand == 0) {
-                    if (validieren(spalte, reihe, i) != true) {
+                    if (validieren(spalte-i, reihe) != true) {
                         valid = false;
                     }
                 } else {
@@ -138,7 +140,7 @@ public class Spielplan
         }
         //Schiff setzen, wenn es gesetzt werden darf
         if (valid == true) {
-            for (int i = 0; i==groesse; i++) {
+            for (int i = 0; i<groesse; i++) {
                 if (orientierung == "nord") {
                     zustand = this.auskunftGeben(spalte, reihe-i);
                     if (zustand == 0) {
@@ -148,7 +150,7 @@ public class Spielplan
                 if (orientierung == "ost") {
                     zustand = this.auskunftGeben(spalte+i, reihe);
                     if (zustand == 0) {
-                        fields[spalte][reihe+i] = 1;
+                        fields[spalte+i][reihe] = 1;
                     }
                 }
                 if (orientierung == "sued") {
@@ -174,30 +176,27 @@ public class Spielplan
      *
      * @param   pSpalte   Spalte des Feldes, auf das ein Schiff gesetzt werden soll
      * @param   pReihe   Reihe des Feldes, auf das ein Schiff gesetzt werden soll
-     * @param   pI   var i von Methode schiffeAufnehmen
      *
      * @return Wahrheitswert, ob das Feld mit einem Schiff belegt werden darf
      */
-    public boolean validieren(int pSpalte, int pReihe, int pI)
+    public boolean validieren(int pSpalte, int pReihe)
     {
-        for (int i = 0; i == 7; i++) {
+        for (int i = 0; i <= 7; i++) {
             auskunft = this.auskunftGeben(this.benachbarteFelderErmitteln(pSpalte, pReihe)[i][0], this.benachbarteFelderErmitteln(pSpalte, pReihe)[i][1]);
             if (auskunft != 0) {
                 invalidCount++;
             }
         }
-        if (pI == 0) {
+        if (pSpalte <=9 && pSpalte >= 0 && pReihe <=9 && pReihe >= 0 ) {
             if (invalidCount == 0) {
                 return true;
             } else {
                 return false;
+                System.out.println("Das Schiff ist zu nah an einem anderen Schiff.");
             }
         } else {
-            if (invalidCount == 1) {
-                return true;
-            } else {
-                return false;
-            }
+            return false;
+            System.out.println("Mindestens ein Feld des Schiffes ist außerhalb des Spielplans.");
         }
     }
 
@@ -214,8 +213,8 @@ public class Spielplan
     }
 
     public void grafikAusgeben() {
-        for (int i = 9; i == 0; i--) {
-            for (int k = 9; k == 0; k--) {
+        for (int i = 0; i <= 9; i++) {
+            for (int k = 0; k <= 9; k++) {
                 System.out.print(fields[k][i]);
             }
             System.out.println("\n");
