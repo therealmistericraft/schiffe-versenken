@@ -8,6 +8,11 @@ public class Spielplan
     // instance variables - replace the example below with your own
     private int[][] fields;
     private int test;
+    private int zustand;
+    private Spieler gewinner;
+    private int invalidCount;
+    private int auskunft;
+    private boolean valid;
     private int a;
     private int b;
     private int c;
@@ -34,18 +39,17 @@ public class Spielplan
         h = 8;
         i = 9;
         j = 10;
+        invalidCount = 0;
+        valid = true;
         fields = new int[10][10];
-        System.out.println("1");
-        for (int i = 10; i>0; i--) {
-            System.out.println("2");
-            for (int k = 10; i>0; i--) {
+        for (int i = 9; i == 0; i--) {
+            for (int k = 9; i == 0; i--) {
                 fields[i][k] = 0;
                 test++;
-                System.out.println("3");
             }
         }
     }
-    
+
     /**
      * Gibt zurück, welchen Zustand das Feld hat
      *
@@ -57,7 +61,7 @@ public class Spielplan
     {
            return fields[spalte][reihe];
     }
-    
+
     public int[][] benachbarteFelderErmitteln(int spalte, int reihe)
     {
         int[][] benachbarteFelder = new int[8][2];
@@ -79,7 +83,7 @@ public class Spielplan
         benachbarteFelder[7][1] = reihe-1;
         return benachbarteFelder;
     }
-    
+
      /**
      * Setzt ein Schiff auf ein Anfangsfeld mit einer Orientierung
      *
@@ -89,34 +93,114 @@ public class Spielplan
      */
     public void schiffeAufnehmen(int spalte, int reihe, int groesse, String orientierung)
     {
-        for (int i = 0, i=groesse, i++) {
+        //erst pruefen, ob das Schiff so gesetzt werden kann
+        for (int i = 0; i==groesse; i++) {
             if (orientierung == "nord") {
                 zustand = this.auskunftGeben(spalte, reihe-i);
                 if (zustand == 0) {
-                    fields[spalte][reihe-i] = 1;   
+                    if (validieren(spalte, reihe, i) != true) {
+                        valid = false;
+                    }
+                } else {
+                    valid = false;
                 }
             }
             if (orientierung == "ost") {
                 zustand = this.auskunftGeben(spalte+i, reihe);
                 if (zustand == 0) {
-                    fields[spalte][reihe+i] = 1;   
+                    if (validieren(spalte, reihe, i) != true) {
+                        valid = false;
+                    }
+                } else {
+                    valid = false;
                 }
             }
             if (orientierung == "sued") {
                 zustand = this.auskunftGeben(spalte, reihe+i);
                 if (zustand == 0) {
-                    fields[spalte][reihe+i] = 1;   
+                    if (validieren(spalte, reihe, i) != true) {
+                        valid = false;
+                    }
+                } else {
+                    valid = false;
                 }
             }
             if (orientierung == "west") {
                 zustand = this.auskunftGeben(spalte-i, reihe);
                 if (zustand == 0) {
-                    fields[spalte-i][reihe] = 1;   
+                    if (validieren(spalte, reihe, i) != true) {
+                        valid = false;
+                    }
+                } else {
+                    valid = false;
                 }
             }
         }
+        //Schiff setzen, wenn es gesetzt werden darf
+        if (valid == true) {
+            for (int i = 0; i==groesse; i++) {
+                if (orientierung == "nord") {
+                    zustand = this.auskunftGeben(spalte, reihe-i);
+                    if (zustand == 0) {
+                        fields[spalte][reihe-i] = 1;
+                    }
+                }
+                if (orientierung == "ost") {
+                    zustand = this.auskunftGeben(spalte+i, reihe);
+                    if (zustand == 0) {
+                        fields[spalte][reihe+i] = 1;
+                    }
+                }
+                if (orientierung == "sued") {
+                    zustand = this.auskunftGeben(spalte, reihe+i);
+                    if (zustand == 0) {
+                        fields[spalte][reihe+i] = 1;
+                    }
+                }
+                if (orientierung == "west") {
+                    zustand = this.auskunftGeben(spalte-i, reihe);
+                    if (zustand == 0) {
+                        fields[spalte-i][reihe] = 1;
+                    }
+                }
+            }
+        } else {
+            System.out.println("Das Schiff kann so nicht gesetzt werden!");
+        }
     }
-    
+
+    /**
+     * Testet, ob ein Schiff dort platzizert werden darf
+     *
+     * @param   pSpalte   Spalte des Feldes, auf das ein Schiff gesetzt werden soll
+     * @param   pReihe   Reihe des Feldes, auf das ein Schiff gesetzt werden soll
+     * @param   pI   var i von Methode schiffeAufnehmen
+     *
+     * @return Wahrheitswert, ob das Feld mit einem Schiff belegt werden darf
+     */
+    public boolean validieren(int pSpalte, int pReihe, int pI)
+    {
+        for (int i = 0; i == 7; i++) {
+            auskunft = this.auskunftGeben(this.benachbarteFelderErmitteln(pSpalte, pReihe)[i][0], this.benachbarteFelderErmitteln(pSpalte, pReihe)[i][1]);
+            if (auskunft != 0) {
+                invalidCount++;
+            }
+        }
+        if (pI == 0) {
+            if (invalidCount == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (invalidCount == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     /**
      * Prueft, ob ein Spieler gewonnen hat und gibt ggf. das Spielerobjekt zurueck
      * Moegliche Loesung: Anzahl der Felder, auf denen ein Schiff ist, bestimmen und mit der Anzahl der Felder, bei denen "2" ist, abgleichen
@@ -125,6 +209,16 @@ public class Spielplan
      */
     public Spieler gewinner()
     {
-           
+        //Platzhalter, hier muss noch der gewinner determiniert werden
+        return gewinner;
+    }
+
+    public void grafikAusgeben() {
+        for (int i = 9; i == 0; i--) {
+            for (int k = 9; k == 0; k--) {
+                System.out.print(fields[k][i]);
+            }
+            System.out.println("\n");
+        }
     }
 }
