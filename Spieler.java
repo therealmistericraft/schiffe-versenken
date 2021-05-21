@@ -11,6 +11,7 @@ public class Spieler
     private int verfuegbareEiner;
     private int verfuegbareZweier;
     private int verfuegbareDreier;
+    private int anzahlSchiffe;
     private int[] treffer;
     private Spielplan spielplan;
     private Spieler gegner;
@@ -18,11 +19,20 @@ public class Spieler
 
     /**
      * Constructor for objects of class Spieler
+     *
+     * @param   pSpielplan   Objekt des Spielplans, auf dem dieser Spieler seine Schiffe Setzt
+     * @param   pEiner   Anzahl der Schiffe der Größe 1, die verwendet werden sollen
+     * @param   pZweier   Anzahl der Schiffe der Größe 2, die verwendet werden sollen
+     * @param   pDreier   Anzahl der Schiffe der Größe 3, die verwendet werden sollen
      */
-    public Spieler(Spieler pSpieler1, Spielplan pSpielplan)
+    public Spieler(Spielplan pSpielplan, int pEiner, int pZweier, int pDreier)
     {
         // initialise instance variables
         this.spielplan = pSpielplan;
+        this.verfuegbareEiner = pEiner;
+        this.verfuegbareZweier = pZweier;
+        this.verfuegbareDreier = pDreier;
+        this.anzahlSchiffe = this.verfuegbareEiner + (this.verfuegbareZweier*2) + (this.verfuegbareDreier*3);
     }
 
     /**
@@ -34,9 +44,9 @@ public class Spieler
      * @param   richtung   Richtung, in die ausgehend vom Anfangsfeld das Schiff platziert werden soll, nord, ost, sued, west
      */
     public void platzieren(int spalte, int reihe, int groesse, String richtung) {
-           
+
     }
-    
+
     /**
      * Schiesse auf ein Feld, ueberpfuefe zunaechst ob dort bereits geschossen wurde
      *
@@ -44,12 +54,12 @@ public class Spieler
      * @param   reihe   Reihe, in der das Feld liegt, auf das geschossen werden soll, int
      */
     public void schiessen(int spalte, int reihe) {
-        
+
     }
-    
+
     // Get- und Setmethoden
-    
-    
+
+
     // get-Methoden
 
     /**
@@ -60,7 +70,7 @@ public class Spieler
     public int getVerfuegbareEiner() {
         return verfuegbareEiner;
     }
-    
+
      /**
      * Die Anzahl der verfuegbaren Zweier herausfinden
      *
@@ -69,7 +79,7 @@ public class Spieler
     public int getVerfuegbareZweier() {
         return verfuegbareZweier;
     }
-    
+
      /**
      * Die Anzahl der verfuegbaren Dreier herausfinden
      *
@@ -78,7 +88,7 @@ public class Spieler
     public int getVerfuegbareDreier() {
         return verfuegbareDreier;
     }
-    
+
     /**
      * Gibt einen Array mit Feldern, die bereits getroffen wurden, zurück.
      *
@@ -87,7 +97,7 @@ public class Spieler
     public int[] getTreffer() {
         return treffer;
     }
-    
+
     /**
      * Das Gegnerobjekt herausfinden
      *
@@ -96,7 +106,7 @@ public class Spieler
     public Spieler getGegner() {
         return gegner;
     }
-    
+
     /**
      * Das Spielfeldobjekt herausfinden
      *
@@ -105,38 +115,38 @@ public class Spieler
     public Spielplan getSpielfeld() {
         return spielplan;
     }
-    
-    
+
+
     // Set-Methoden
-    
-    
+
+
     /**
      * Festlegen, aus wie vielen Einern die Flotte besteht
-     * 
+     *
      * @param   pEiner   Anzahl der Einer in der Soll-Flotte
      */
     public void setVerfuegbareEiner(int pEiner) {
         this.verfuegbareEiner = pEiner;
     }
-    
+
     /**
      * Festlegen, aus wie vielen Zweiern die Flotte besteht
-     * 
+     *
      * @param   pEiner   Anzahl der Zweier in der Soll-Flotte
      */
     public void setVerfuegbareZweier(int pZweier) {
         this.verfuegbareZweier = pZweier;
     }
-    
+
     /**
      * Festlegen, aus wie vielen Dreiern die Flotte besteht
-     * 
+     *
      * @param   pEiner   Anzahl der Dreier in der Soll-Flotte
      */
     public void setVerfuegbareDreier(int pDreier) {
         this.verfuegbareDreier = pDreier;
     }
-    
+
     /**
      * Gegnerobjekt zuweisen
      *
@@ -144,5 +154,8 @@ public class Spieler
      */
     public void setGegner(Spieler pGegner) {
         this.gegner = pGegner;
+        if (gegner.verfuegbareEiner != this.verfuegbareEiner || gegner.verfuegbareZweier != this.verfuegbareZweier || gegner.verfuegbareDreier != this.verfuegbareDreier) {
+            System.out.println("Ihr spielt mit einer unterschiedlichen Anzahl an Schiffen.");
+        }
     }
 }
