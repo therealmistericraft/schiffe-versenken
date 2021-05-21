@@ -5,14 +5,22 @@
  */
 public class Spielplan
 {
-    // instance variables - replace the example below with your own
+    // instance variables
+    //Spielfeld
     private int[][] fields;
-    private int test;
+    //variable, die auf einen mit auskunftGeben() erlesenen Wert gesetzt werden kann
     private int zustand;
+    //Spieler, der gewonnen hat (wird durch die Methode gewinner() festgelegt)
     private Spieler gewinner;
+    //Counter für die Methode schiffeAufnehmen(), der Zählt, wie viele benachbarte Felder bereits belegt sind
     private int invalidCount;
-    private int auskunft;
+    //temporärer Wahrheitswert, ob ein Schiff so gesetzt werden kann. Wird durch schiffeAufnehmen() festgelegt
     private boolean valid;
+    //Spieler, dem der Spielplan gehört (der seine Schiffe hier platziert)
+    private Spieler spieler;
+    //Spieler, der die Schiffe auf diesem Plan abschießt
+    private Spieler gegner;
+    //Spaltennamen zu Zahlen-Übersetzer
     private int a;
     private int b;
     private int c;
@@ -23,6 +31,10 @@ public class Spielplan
     private int h;
     private int i;
     private int j;
+
+
+
+
 
     /**
      * Constructor for objects of class Spielplan
@@ -50,6 +62,10 @@ public class Spielplan
         }
     }
 
+
+
+
+
     /**
      * Gibt zurück, welchen Zustand das Feld hat
      *
@@ -62,6 +78,13 @@ public class Spielplan
            return fields[spalte][reihe];
     }
 
+
+
+    /**
+     * Ermittelt alle 8 Felder, die um ein spezifiziertes Feld herum angeordnet sind
+     *
+     * @return 8 Felder mit Spalte und Reihe ([Index des Feldes][0: Spalte, 1: Reihe])
+     */
     public int[][] benachbarteFelderErmitteln(int spalte, int reihe)
     {
         int[][] benachbarteFelder = new int[8][2];
@@ -84,85 +107,113 @@ public class Spielplan
         return benachbarteFelder;
     }
 
+
+
      /**
      * Setzt ein Schiff auf ein Anfangsfeld mit einer Orientierung
      *
      * @param   spalte   Spalte, in der das gewuenschte Feld liegt
      * @param   reihe   Reihe, in der das gewuenschte Feld liegt
-     * @param   orientierung   nord, ost, sued und west
+     * @param   orientierung   nord, ost, sued und west, bei 1-er ist diese egal
      */
     public void schiffeAufnehmen(int spalte, int reihe, int groesse, String orientierung)
     {
         spalte--;
         reihe--;
+        System.out.println(spalte + " " + reihe);
+        this.valid = true;
         //erst pruefen, ob das Schiff so gesetzt werden kann
+        if (groesse == 1) {
+            if (spieler.getVerfuegbareEiner() <= 0) {
+                this.valid = false;
+            }
+        } else if (groesse == 2) {
+            if (spieler.getVerfuegbareZweier() <= 0) {
+                this.valid = false;
+            }
+        } else if (groesse == 3) {
+            if (spieler.getVerfuegbareDreier() <= 0) {
+                this.valid = false;
+            }
+        } else {
+            this.valid = false;
+        }
         for (int i = 0; i<groesse; i++) {
             if (orientierung == "nord") {
-                zustand = this.auskunftGeben(spalte, reihe-i);
-                if (zustand == 0) {
+                this.zustand = this.auskunftGeben(spalte, reihe-i);
+                if (this.zustand == 0) {
                     if (validieren(spalte, reihe-i) != true) {
-                        valid = false;
+                        this.valid = false;
                     }
                 } else {
-                    valid = false;
+                    this.valid = false;
                 }
             }
             if (orientierung == "ost") {
-                zustand = this.auskunftGeben(spalte+i, reihe);
-                if (zustand == 0) {
+                this.zustand = this.auskunftGeben(spalte+i, reihe);
+                if (this.zustand == 0) {
                     if (validieren(spalte+i, reihe) != true) {
-                        valid = false;
+                        this.valid = false;
                     }
                 } else {
-                    valid = false;
+                    this.valid = false;
                 }
             }
             if (orientierung == "sued") {
-                zustand = this.auskunftGeben(spalte, reihe+i);
-                if (zustand == 0) {
+                this.zustand = this.auskunftGeben(spalte, reihe+i);
+                if (this.zustand == 0) {
                     if (validieren(spalte, reihe+i) != true) {
-                        valid = false;
+                        this.valid = false;
                     }
                 } else {
-                    valid = false;
+                    this.valid = false;
                 }
             }
             if (orientierung == "west") {
-                zustand = this.auskunftGeben(spalte-i, reihe);
-                if (zustand == 0) {
+                this.zustand = this.auskunftGeben(spalte-i, reihe);
+                if (this.zustand == 0) {
                     if (validieren(spalte-i, reihe) != true) {
-                        valid = false;
+                        this.valid = false;
                     }
                 } else {
-                    valid = false;
+                    this.valid = false;
                 }
             }
         }
         //Schiff setzen, wenn es gesetzt werden darf
-        if (valid == true) {
+        if (this.valid == true) {
+            if (groesse == 1) {
+                spieler.setVerfuegbareEiner(spieler.getVerfuegbareEiner()-1);
+            }
+            if (groesse == 2) {
+                spieler.setVerfuegbareZweier(spieler.getVerfuegbareZweier()-1);
+            }
+            if (groesse == 3) {
+                spieler.setVerfuegbareEiner(spieler.getVerfuegbareDreier()-1);
+            }
             for (int i = 0; i<groesse; i++) {
                 if (orientierung == "nord") {
-                    zustand = this.auskunftGeben(spalte, reihe-i);
-                    if (zustand == 0) {
-                        fields[spalte][reihe-i] = 1;
+                    this.zustand = this.auskunftGeben(spalte, reihe-i);
+                    if (this.zustand == 0) {
+                        this.fields[spalte][reihe-i] = 1;
                     }
                 }
                 if (orientierung == "ost") {
-                    zustand = this.auskunftGeben(spalte+i, reihe);
-                    if (zustand == 0) {
-                        fields[spalte+i][reihe] = 1;
+                    this.zustand = this.auskunftGeben(spalte+i, reihe);
+                    if (this.zustand == 0) {
+                        this.fields[spalte+i][reihe] = 1;
                     }
                 }
                 if (orientierung == "sued") {
-                    zustand = this.auskunftGeben(spalte, reihe+i);
-                    if (zustand == 0) {
-                        fields[spalte][reihe+i] = 1;
+                    this.zustand = this.auskunftGeben(spalte, reihe+i);
+                    if (this.zustand == 0) {
+                        this.fields[spalte][reihe+i] = 1;
                     }
                 }
                 if (orientierung == "west") {
-                    zustand = this.auskunftGeben(spalte-i, reihe);
-                    if (zustand == 0) {
-                        fields[spalte-i][reihe] = 1;
+                    this.zustand = this.auskunftGeben(spalte-i, reihe);
+                    if (this.zustand == 0) {
+                        this.fields[spalte-i][reihe] = 1;
                     }
                 }
             }
@@ -170,6 +221,8 @@ public class Spielplan
             System.out.println("Das Schiff kann so nicht gesetzt werden!");
         }
     }
+
+
 
     /**
      * Testet, ob ein Schiff dort platzizert werden darf
@@ -182,13 +235,13 @@ public class Spielplan
     public boolean validieren(int pSpalte, int pReihe)
     {
         for (int i = 0; i <= 7; i++) {
-            auskunft = this.auskunftGeben(this.benachbarteFelderErmitteln(pSpalte, pReihe)[i][0], this.benachbarteFelderErmitteln(pSpalte, pReihe)[i][1]);
-            if (auskunft != 0) {
-                invalidCount++;
+            this.zustand = this.auskunftGeben(this.benachbarteFelderErmitteln(pSpalte, pReihe)[i][0], this.benachbarteFelderErmitteln(pSpalte, pReihe)[i][1]);
+            if (this.zustand != 0) {
+                this.invalidCount++;
             }
         }
         if (pSpalte <=9 && pSpalte >= 0 && pReihe <=9 && pReihe >= 0 ) {
-            if (invalidCount == 0) {
+            if (this.invalidCount == 0) {
                 return true;
             } else {
                 return false;
@@ -199,6 +252,8 @@ public class Spielplan
             System.out.println("Mindestens ein Feld des Schiffes ist außerhalb des Spielplans.");
         }
     }
+
+
 
     /**
      * Prueft, ob ein Spieler gewonnen hat und gibt ggf. das Spielerobjekt zurueck
@@ -212,12 +267,80 @@ public class Spielplan
         return gewinner;
     }
 
-    public void grafikAusgeben() {
+
+
+    /**
+     * Gibt das Spielfeld als 10x10 Matrix mit jeweligen Feldwerten (int) in die Konsole aus
+     */
+    public void grafikAusgeben()
+    {
         for (int i = 0; i <= 9; i++) {
             for (int k = 0; k <= 9; k++) {
                 System.out.print(fields[k][i]);
             }
             System.out.println("\n");
         }
+    }
+
+
+
+    //Set-Methoden
+
+    /**
+     * Setzt den Spieler, dem dieser Spielplan gehört (der hier seine Schiffe platziert)
+     */
+    public void setSpieler(Spieler pSpieler)
+    {
+        this.spieler = pSpieler;
+    }
+
+
+
+    /**
+     * Setzt den Spieler, der die Schiffe auf diesem Spielplan abschießt
+     */
+    public void setGegner(Spieler pGegner)
+    {
+        this.gegner = pGegner;
+    }
+
+
+
+    /**
+     * Setzt den Wert eines Feldes
+     *
+     * @param   spalte   Spalte des Feldes (0<splate<11)
+     * @param   reihe   Reihe des Feldes (0<splate<11)
+     * @param   wert   Zustand des Feldes (0<=wert<5)
+     */
+    public void setField(int spalte, int reihe, int wert)
+    {
+        this.fields[spalte-1][reihe-1] = wert;
+    }
+
+
+
+    //TODO: changeField
+
+
+
+    //get-Methoden
+
+    /**
+     * @return Spielerobjekt des Spielers, der die Schiffe auf diesem Plan abschießt
+     */
+    public Spieler getSpieler()
+    {
+        return this.spieler;
+    }
+
+
+
+    /**
+     * @return Spielerobjekt des Spielers, der die Schiffe auf diesem Plan abschießt
+     */
+    public Spieler getGegner()
+    {
+        return this.gegner;
     }
 }
