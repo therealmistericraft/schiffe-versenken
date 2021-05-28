@@ -1,5 +1,6 @@
 #BlueJ class context
 comment0.target=Spielplan
+<<<<<<< Updated upstream
 comment0.text=\r\n\ 10x10\ Spielplan\ f\u00FCr\ das\ Schiffe-versenken-Spiel\r\n\r\n\ @version\ 0.1\r\n
 comment1.params=
 comment1.target=Spielplan()
@@ -21,3 +22,13 @@ comment6.text=\r\n\ Prueft,\ ob\ ein\ Spieler\ gewonnen\ hat\ und\ gibt\ ggf.\ d
 comment7.params=
 comment7.target=void\ grafikAusgeben()
 numComments=8
+=======
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Spielplan\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=Spielplan()
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Spielplan\r\n
+comment2.params=y
+comment2.target=int\ sampleMethod(int)
+comment2.text=\r\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\r\n\r\n\ @param\ \ y\ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ the\ sum\ of\ x\ and\ y\r\n
+numComments=3
+>>>>>>> Stashed changes
