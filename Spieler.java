@@ -57,6 +57,33 @@ public class Spieler
 
     }
 
+
+
+    /**
+     * Gibt das Spielfeld, auf das dieser Spieler schießt als 10x10 Matrix mit jeweligen Feldwerten (int) in die Konsole aus
+     * 0: Weder versucht noch getroffen
+     * 1: versucht, aber nicht getroffen
+     * 2: getroffen
+     */
+    public void grafikAusgeben()
+    {
+        for (int i = 0; i <= 9; i++) {
+            for (int k = 0; k <= 9; k++) {
+                if (gegner.spielfeld.auskunftGeben(k,i) <= 1) {
+                    int decoded = 0;
+                }
+                if (gegner.spielfeld.auskunftGeben(k,i) == 2) {
+                    int decoded = 2;
+                }
+                if (gegner.spielfeld.auskunftGeben(k,i) == 3) {
+                    int decoded = 1;
+                }
+                System.out.print(decoded);
+            }
+            System.out.println("\n");
+        }
+    }
+
     // Get- und Setmethoden
 
 

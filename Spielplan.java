@@ -320,10 +320,6 @@ public class Spielplan
 
 
 
-    //TODO: changeField
-
-
-
     //get-Methoden
 
     /**
