@@ -263,8 +263,18 @@ public class Spielplan
      */
     public Spieler gewinner()
     {
-        //Platzhalter, hier muss noch der gewinner determiniert werden
-        return gewinner;
+        int anzahlSchiffe = spieler.getAnzahlSchiffe();
+        int getroffen = 0;
+        for (int i = 0; i <= 9; i++) {
+            for (int k = 0; k <= 9; k++) {
+                if (fields[k][i] == 2) {
+                    getroffen++;
+                }
+            }
+        }
+        if (anzahlSchiffe == getroffen) {
+            System.out.println(gegner.getName()+" hat alle Schiffe getroffen!")
+        }
     }
 
 

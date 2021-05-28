@@ -15,6 +15,7 @@ public class Spieler
     private int[] treffer;
     private Spielplan spielplan;
     private Spieler gegner;
+    private String name;
 
 
     /**
@@ -25,10 +26,11 @@ public class Spieler
      * @param   pZweier   Anzahl der Schiffe der Größe 2, die verwendet werden sollen
      * @param   pDreier   Anzahl der Schiffe der Größe 3, die verwendet werden sollen
      */
-    public Spieler(Spielplan pSpielplan, int pEiner, int pZweier, int pDreier)
+    public Spieler(Spielplan pSpielplan, String pName, int pEiner, int pZweier, int pDreier)
     {
         // initialise instance variables
         this.spielplan = pSpielplan;
+        this.name = pName;
         this.verfuegbareEiner = pEiner;
         this.verfuegbareZweier = pZweier;
         this.verfuegbareDreier = pDreier;
@@ -115,6 +117,24 @@ public class Spieler
     public int getVerfuegbareDreier() {
         return verfuegbareDreier;
     }
+
+    /**
+    * Die Anzahl der Felder, auf denen ein Schiff ist, herausfinden
+    *
+    * @return    Anzahl der Felder, die mit einem Schiff belegt sind
+    */
+   public int getAnzahlSchiffe() {
+       return anzahlSchiffe;
+   }
+
+   /**
+    * Gibt den Namen des Spielers aus
+    *
+    * @return    Name des Spielers
+    */
+   public String getName() {
+       return name;
+   }
 
     /**
      * Gibt einen Array mit Feldern, die bereits getroffen wurden, zurück.
