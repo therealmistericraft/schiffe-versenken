@@ -46,17 +46,29 @@ public class Spieler
      * @param   richtung   Richtung, in die ausgehend vom Anfangsfeld das Schiff platziert werden soll, nord, ost, sued, west
      */
     public void platzieren(int spalte, int reihe, int groesse, String richtung) {
-
+        spielplan.schiffeAufnehmen(spalte, reihe, groesse, richtung);
+        System.out.println("\n");
+        spielplan.grafikAusgeben();
     }
 
     /**
-     * Schiesse auf ein Feld, ueberpfuefe zunaechst ob dort bereits geschossen wurde
+     * Schiesse auf ein Feld, ueberpruefe zunaechst ob dort bereits geschossen wurde
      *
      * @param   spalte    Spalte, in der das Feld liegt, auf das geschossen werden soll, int oder var
      * @param   reihe   Reihe, in der das Feld liegt, auf das geschossen werden soll, int
      */
     public void schiessen(int spalte, int reihe) {
-
+        int field = gegner.spielplan.auskunftGeben(spalte, reihe);
+        if (field == 0) {
+            gegner.spielplan.setField(spalte, reihe, 3);
+        } else if (field == 1) {
+            gegner.spielplan.setField(spalte, reihe, 2);
+            System.out.println("Getroffen!");
+        } else {
+            System.out.println("Du hast hier schon geschossen. Probiere ein anderes Feld.");
+        }
+        System.out.println("\n");
+        this.grafikAusgeben();
     }
 
 
@@ -71,14 +83,15 @@ public class Spieler
     {
         for (int i = 0; i <= 9; i++) {
             for (int k = 0; k <= 9; k++) {
-                if (gegner.spielfeld.auskunftGeben(k,i) <= 1) {
-                    int decoded = 0;
+                int decoded = 0;
+                if (gegner.spielplan.auskunftGeben(k,i) <= 1) {
+                    decoded = 0;
                 }
-                if (gegner.spielfeld.auskunftGeben(k,i) == 2) {
-                    int decoded = 2;
+                if (gegner.spielplan.auskunftGeben(k,i) == 2) {
+                    decoded = 2;
                 }
-                if (gegner.spielfeld.auskunftGeben(k,i) == 3) {
-                    int decoded = 1;
+                if (gegner.spielplan.auskunftGeben(k,i) == 3) {
+                    decoded = 1;
                 }
                 System.out.print(decoded);
             }

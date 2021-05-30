@@ -57,7 +57,6 @@ public class Spielplan
         for (int i = 9; i >= 0; i--) {
             for (int k = 9; i >= 0; i--) {
                 fields[i][k] = 0;
-                test++;
             }
         }
     }
@@ -120,7 +119,6 @@ public class Spielplan
     {
         spalte--;
         reihe--;
-        System.out.println(spalte + " " + reihe);
         this.valid = true;
         //erst pruefen, ob das Schiff so gesetzt werden kann
         if (groesse == 1) {
@@ -234,6 +232,8 @@ public class Spielplan
      */
     public boolean validieren(int pSpalte, int pReihe)
     {
+        this.invalidCount = 0;
+        boolean tmp = false;
         for (int i = 0; i <= 7; i++) {
             this.zustand = this.auskunftGeben(this.benachbarteFelderErmitteln(pSpalte, pReihe)[i][0], this.benachbarteFelderErmitteln(pSpalte, pReihe)[i][1]);
             if (this.zustand != 0) {
@@ -242,15 +242,16 @@ public class Spielplan
         }
         if (pSpalte <=9 && pSpalte >= 0 && pReihe <=9 && pReihe >= 0 ) {
             if (this.invalidCount == 0) {
-                return true;
+                tmp = true;
             } else {
-                return false;
+                tmp = false;
                 System.out.println("Das Schiff ist zu nah an einem anderen Schiff.");
             }
         } else {
-            return false;
+            tmp = false;
             System.out.println("Mindestens ein Feld des Schiffes ist außerhalb des Spielplans.");
         }
+        return tmp;
     }
 
 
@@ -261,7 +262,7 @@ public class Spielplan
      *
      * @return Objekt des Spielers, der gewonnen hat
      */
-    public Spieler gewinner()
+    public void gewinner()
     {
         int anzahlSchiffe = spieler.getAnzahlSchiffe();
         int getroffen = 0;
@@ -273,7 +274,7 @@ public class Spielplan
             }
         }
         if (anzahlSchiffe == getroffen) {
-            System.out.println(gegner.getName()+" hat alle Schiffe getroffen!")
+            System.out.println(gegner.getName()+" hat alle Schiffe getroffen!");
         }
     }
 
