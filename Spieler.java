@@ -61,6 +61,7 @@ public class Spieler
         int field = gegner.spielplan.auskunftGeben(spalte, reihe);
         if (field == 0) {
             gegner.spielplan.setField(spalte, reihe, 3);
+            System.out.println("Nichts!");
         } else if (field == 1) {
             gegner.spielplan.setField(spalte, reihe, 2);
             System.out.println("Getroffen!");
